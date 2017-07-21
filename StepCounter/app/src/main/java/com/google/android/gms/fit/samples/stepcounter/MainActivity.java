@@ -235,13 +235,7 @@ public class MainActivity extends AppCompatActivity {
             messageHistoryHandler = new Handler();
             messageHistoryHandler.postDelayed(myRunnable,7000);
         }
-
-
-
-
     }
-
-
     Handler messageHistoryHandler = null;
     private Runnable myRunnable = new Runnable() {
         @Override
