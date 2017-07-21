@@ -18,6 +18,7 @@ package com.google.android.gms.fit.samples.stepcounter;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -210,4 +211,75 @@ public class MainActivity extends AppCompatActivity {
         msgFilter.setNext(logView);
         Log.i(TAG, "Ready");
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void getMessagesHandler()
+    {
+        if(messageHistoryHandler !=null){
+            messageHistoryHandler.postDelayed(myRunnable,7000);
+        }
+        else {
+            messageHistoryHandler = new Handler();
+            messageHistoryHandler.postDelayed(myRunnable,7000);
+        }
+
+
+
+
+    }
+
+
+    Handler messageHistoryHandler = null;
+    private Runnable myRunnable = new Runnable() {
+        @Override
+        public void run() {
+            //Do Something
+            readData();
+
+            getMessagesHandler();
+        }
+    };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if(messageHistoryHandler !=null && myRunnable !=null) {
+            messageHistoryHandler.removeCallbacks(myRunnable);
+            messageHistoryHandler = null;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMessagesHandler();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(messageHistoryHandler !=null && myRunnable !=null) {
+            messageHistoryHandler.removeCallbacks(myRunnable);
+            messageHistoryHandler = null;
+        }
+    }
+
+
+
+
+
+
 }
